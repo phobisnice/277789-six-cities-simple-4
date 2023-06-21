@@ -1,4 +1,4 @@
-export enum OfferLimit {
+export const enum OfferLimit {
   MAX_TITLE_LENGTH = 100,
   MAX_DESCRIPTION_LENGTH = 1024,
   MIN_RATING_VALUE = 1,
