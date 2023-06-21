@@ -83,6 +83,13 @@ npm run ts ./src/main.cli.ts -- --generate 10 ./mocks/mock-test.tsv http://local
 Запуск команды сгенерирует моковые данные и положит их в файл ./mocks/mock-test.tsv. Перед запуском команды убедитесь,
 что запущен json-server.
 
+### Импорт моков
+```bash
+npm run ts ./src/main.cli.ts -- --import ./mocks/mock-test.tsv admin test localhost six-cities random
+```
+
+пример импорта уже сгенерированных моков в базу данных
+
 ## Структура проекта
 
 ### Директория `src`
