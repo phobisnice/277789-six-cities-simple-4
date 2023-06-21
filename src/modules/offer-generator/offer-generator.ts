@@ -16,7 +16,7 @@ export default class OfferGenerator implements OfferGeneratorInterface {
   public generate(): string {
     const title = getRandomItem(this.mockData.titles).slice(0, OfferLimit.MAX_TITLE_LENGTH);
     const description = getRandomItem(this.mockData.descriptions).slice(0, OfferLimit.MAX_DESCRIPTION_LENGTH);
-    const createData = dayjs().subtract(
+    const createDate = dayjs().subtract(
       generateRandomNumber(OfferLimit.FIRST_WEEK_DAY, OfferLimit.LAST_WEEK_DAY),
       'day'
     ).toISOString();
@@ -48,7 +48,7 @@ export default class OfferGenerator implements OfferGeneratorInterface {
     return [
       title,
       description,
-      createData,
+      createDate,
       city,
       previewImage,
       images,
