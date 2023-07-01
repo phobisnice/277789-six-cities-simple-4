@@ -1,0 +1,141 @@
+openapi: 3.1.0
+info:
+  title: API сервер для проекта «Шесть городов».
+  description: |-
+    * Список ресурсов и маршрутов сервера «Шесть городов».
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+tags:
+  - name: offers
+    description: Действия с объявлениями.
+  - name: comments
+    description: Действия с комментариями.
+  - name: users
+    description: Действия с пользователями.
+
+paths:
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Регистрация нового пользователя
+      description: Регистрирует нового пользователя
+      requestBody:
+        description: Информация для создания нового пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+            required: true
+      responses:
+        '201':
+          description: Пользователь зарегистрирован. Объект пользователя.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '409':
+          description: Пользователь с таким email уже существует
+
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Авторизация пользователя
+      description: Авторизует пользователя на основе логина и пароля
+      requestBody:
+        description: Информация для авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginUser'
+            required: true
+      responses:
+        '200':
+          description: Успешная авторизация. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          description: Неверный логин или пароль
+
+    get:
+      tags:
+        - users
+      summary: Проверка состояния пользователя
+      description: Возвращает информацию по авторизованному пользователю
+      responses:
+        '200':
+          description: Пользователь авторизован. Объект пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '401':
+          description: Пользователь не авторизован
+
+components:
+  schemas:
+    createUser:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          format: email
+          example: example@domen.com
+        name:
+          type: string
+          required: true
+          example: Alex
+        avatar:
+          type: string
+          example: some-path/avatar.jpg
+        type:
+          type: string
+          required: true
+          enum: [ normal, pro ]
+          example: normal
+        password:
+          type: string
+          required: true
+          format: password
+          example: 123456
+
+    loginUser:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          format: email
+          example: example@domen.com
+        password:
+          type: string
+          required: true
+          format: password
+          example: 123456
+
+    user:
+      type: object
+      properties:
+        email:
+          type: string
+          required: true
+          format: email
+          example: example@domen.com
+        name:
+          type: string
+          required: true
+          example: Alex
+        avatar:
+          type: string
+          example: some-path/avatar.jpg
+        type:
+          type: string
+          required: true
+          enum: [ normal, pro ]
+          example: normal
