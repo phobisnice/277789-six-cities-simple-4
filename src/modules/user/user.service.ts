@@ -5,6 +5,7 @@ import CreateUserDto from './dto/create-user.dto.js';
 import { UserEntity } from './user.entity.js';
 import { AppComponent } from '../../types/app-component.enum.js';
 import { LoggerInterface } from '../../core/logger/logger.interface.js';
+import UpdateUserDto from './dto/update-user.dto.js';
 
 @injectable()
 export default class UserService implements UserServiceInterface {
@@ -34,5 +35,11 @@ export default class UserService implements UserServiceInterface {
     const existedUser = await this.findByEmail(data.email);
 
     return existedUser ?? this.create(data, salt);
+  }
+
+  public async updateById(id: string, data: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
+    return this.userModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .exec();
   }
 }
